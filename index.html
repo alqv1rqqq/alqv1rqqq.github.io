@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIL Services</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+    }
+    .container {
+        text-align: center;
+        padding: 20px;
+        background-color: black;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        color: white;
+        width: 300px;
+        position: relative;
+    }
+    .container h2 {
+        font-size: 18px;
+        margin: 0;
+        padding: 10px 0;
+    }
+    .btn-container {
+        margin-top: 20px;
+    }
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 0 10px;
+        background-color: #ff5555;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+        background-color: #ff7777;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Basic Key System</h2>
+    <div class="btn-container">
+        <a href="https://discord.com/invite/7k2Wxe8gMx" class="btn" target="_blank">Discord</a>
+        <button class="btn" id="copyBtn">copy key</button>
+    </div>
+</div>
+
+<script>
+    const copyBtn = document.getElementById('copyBtn');
+
+    copyBtn.addEventListener('click', () => {
+        const textToCopy = "d92dma91kd92kda9skd91dk9skad91kd29kd9askd91kd92kd9askd92k47ash7d2";
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => {
+                alert('copied key');
+            })
+            .catch(err => {
+                console.error('error copying: ', err);
+            });
+    });
+</script>
+
+</body>
+</html>
+
