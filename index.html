@@ -14,20 +14,25 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
         }
         .tabs {
             display: flex;
             justify-content: center;
             background-color: #333;
             border-radius: 10px 10px 0 0;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
         }
         .tabs button {
             background-color: #333;
             color: white;
-            padding: 14px 20px;
+            padding: 20px 30px;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 18px;
         }
         .tabs button:hover {
             background-color: #111;
@@ -39,9 +44,10 @@
             background-color: white;
             border-radius: 0 0 10px 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 600px;
+            width: 90%;
+            max-width: 800px;
             margin: 0 auto;
+            margin-bottom: 20px;
         }
         .tab-content.active {
             display: block;
@@ -56,8 +62,8 @@
             justify-content: space-between;
         }
         .game-icon {
-            width: 150px;
-            height: 150px;
+            width: 200px;
+            height: 200px;
             border-radius: 10px;
         }
         .game-info {
@@ -65,39 +71,74 @@
             margin-left: 20px;
         }
         .game-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
         }
         .game-owner {
-            font-size: 14px;
+            font-size: 16px;
             color: #888;
         }
         .game-description {
             margin-top: 10px;
+            font-size: 18px;
         }
         .play-button {
             background-color: #28a745;
             color: white;
-            padding: 10px 20px;
+            padding: 15px 30px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             margin-top: 20px;
             text-decoration: none;
             display: inline-block;
-            font-size: 16px;
+            font-size: 18px;
         }
         .play-button:hover {
             background-color: #218838;
+        }
+        .giveaway-frame {
+            border-radius: 15px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .countdown {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .enter-button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .enter-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
 
     <div class="tabs">
+        <button onclick="showTab('giveaway')">Giveaway</button>
         <button onclick="showTab('adopt-me')">Adopt Me</button>
         <button onclick="showTab('blox-fruits')">Blox Fruits</button>
         <button onclick="showTab('da-hood')">Da Hood</button>
+    </div>
+
+    <div id="giveaway" class="tab-content active">
+        <div class="giveaway-frame">
+            <h2>Win an Adopt Me Owl!</h2>
+            <div class="countdown">Countdown: <span id="countdown-timer">30:00:00</span></div>
+            <a href="#" class="enter-button">Enter Giveaway</a>
+        </div>
     </div>
 
     <div id="adopt-me" class="tab-content">
@@ -149,6 +190,31 @@
 
             document.getElementById(tabId).classList.add('active');
         }
+
+        function startCountdown(duration, display) {
+            let timer = duration, hours, minutes, seconds;
+            setInterval(function () {
+                hours = parseInt(timer / 3600, 10);
+                minutes = parseInt((timer % 3600) / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = hours + ":" + minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = duration;
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            const thirtyHours = 30 * 60 * 60;
+            const display = document.querySelector('#countdown-timer');
+            startCountdown(thirtyHours, display);
+        };
     </script>
 
 </body>
