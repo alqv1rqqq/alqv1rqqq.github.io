@@ -7,25 +7,31 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
             margin: 0;
             padding: 0;
-            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
         }
         .tabs {
             display: flex;
             justify-content: center;
             background-color: #333;
-            border-radius: 10px 10px 0 0;
             padding: 10px;
         }
         .tabs button {
             background-color: #333;
             color: white;
-            padding: 20px 30px;
+            padding: 14px 20px;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s;
-            font-size: 18px;
+            margin: 0 5px;
         }
         .tabs button:hover {
             background-color: #111;
@@ -33,94 +39,99 @@
         .tab-content {
             display: none;
             padding: 20px;
-            text-align: left;
-            background-color: white;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            margin-bottom: 20px;
         }
         .tab-content.active {
             display: block;
         }
-        .game-frame {
-            border-radius: 15px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .game-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
         }
-        .game-icon {
-            width: 300px;
-            height: 300px;
+        .game-header img {
+            width: 100px;
+            height: 100px;
             border-radius: 10px;
         }
         .game-info {
-            flex-grow: 1;
             margin-left: 20px;
         }
-        .game-title {
-            font-size: 36px;
-            font-weight: bold;
-        }
-        .game-owner {
+        .game-info h2 {
+            margin: 0;
             font-size: 24px;
-            color: #888;
         }
-        .game-description {
-            margin-top: 10px;
-            font-size: 24px;
+        .game-info p {
+            margin: 5px 0;
+            color: #666;
         }
         .play-button, .discord-button {
-            background-color: #28a745;
+            display: inline-block;
             color: white;
-            padding: 20px 40px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 50px;
             cursor: pointer;
             margin-top: 20px;
             text-decoration: none;
-            display: inline-block;
-            font-size: 24px;
+            border-radius: 5px;
         }
-        .play-button:hover, .discord-button:hover {
+        .play-button {
+            background-color: #28a745;
+        }
+        .play-button:hover {
             background-color: #218838;
         }
         .discord-button {
-            background-color: #7289da;
-            margin-left: 20px;
+            background-color: #7289DA;
+            display: flex;
+            align-items: center;
+        }
+        .discord-button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
         }
         .discord-button:hover {
             background-color: #5b6eae;
         }
-        .giveaway-frame {
-            border-radius: 15px;
-            background-color: #fff;
+        .profile {
+            display: flex;
+            align-items: center;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
         }
-        .countdown {
-            font-size: 36px;
-            font-weight: bold;
-            margin: 20px 0;
+        .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
         }
-        .enter-button {
-            background-color: #007bff;
-            color: white;
-            padding: 20px 40px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
+        .profile-info {
+            margin-left: 20px;
+        }
+        .profile-info h2 {
+            margin: 0;
             font-size: 24px;
         }
-        .enter-button:hover {
-            background-color: #0056b3;
+        .profile-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .profile-buttons a {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .profile-buttons a:hover {
+            background-color: #218838;
+        }
+        .friends-section img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 5px;
         }
     </style>
 </head>
@@ -131,94 +142,177 @@
         <button onclick="showTab('adopt-me')">Adopt Me</button>
         <button onclick="showTab('blox-fruits')">Blox Fruits</button>
         <button onclick="showTab('da-hood')">Da Hood</button>
+        <button onclick="showTab('profile')">Profile</button>
     </div>
 
-    <div id="giveaway" class="tab-content active">
-        <div class="giveaway-frame">
-            <h2>Win an Adopt Me Owl!</h2>
-            <div class="countdown">Countdown: <span id="countdown-timer">30:00:00</span></div>
-            <a href="#" class="enter-button">Enter Giveaway</a>
+    <div class="container">
+        <div id="giveaway" class="tab-content">
+            <h2>Adopt Me Owl Giveaway</h2>
+            <p>Win an exclusive Adopt Me Owl! The giveaway ends in:</p>
+            <div id="countdown">30:00:00</div>
+            <button class="play-button">Enter Giveaway</button>
         </div>
-    </div>
 
-    <div id="adopt-me" class="tab-content">
-        <div class="game-frame">
-            <img src="https://raw.githubusercontent.com/alqv1rqqq/alqv1rqqq.github.io/main/adoptme.png" alt="Adopt Me Icon" class="game-icon">
-            <div class="game-info">
-                <div class="game-title">Adopt Me</div>
-                <div class="game-owner">by DreamCraft</div>
-                <div class="game-description">
-                    Adopt Me is a massively multiplayer online game on the gaming platform Roblox. The game features a variety of virtual pets, a customizable home, and various activities to enjoy with friends.
+        <div id="adopt-me" class="tab-content">
+            <div class="game-header">
+                <img src="https://github.com/alqv1rqqq/alqv1rqqq.github.io/raw/main/adoptme.png" alt="Adopt Me Icon">
+                <div class="game-info">
+                    <h2 id="adopt-me-title">Adopt Me!</h2>
+                    <p>By DreamCraft</p>
+                    <a id="adopt-me-play" href="https://www.roblox.kg/games/920587237/SUMMER-Adopt-Me?privateServerLinkCode=21466219774961862876923121752949" class="play-button">Play Now</a>
                 </div>
-                <a href="https://www.roblox.kg/games/920587237/SUMMER-Adopt-Me?privateServerLinkCode=21466219774961862876923121752949" class="play-button">Play Now</a>
-                <a href="https://discord.gg/KYggEuWAxz" class="discord-button">Join Discord</a>
             </div>
+            <p id="adopt-me-description">Adopt Me is a massively multiplayer online game on the gaming platform Roblox. The game features a variety of virtual pets, a customizable home, and various activities to enjoy with friends.</p>
+            <p><strong id="adopt-me-visits">Visits:</strong> Loading...</p>
+            <p><strong id="adopt-me-favorites">Favorites:</strong> Loading...</p>
+            <p><strong id="adopt-me-likes">Likes:</strong> Loading...</p>
+            <p><strong id="adopt-me-playing">Playing:</strong> Loading...</p>
+            <p><strong id="adopt-me-created">Created:</strong> Loading...</p>
+            <p><strong id="adopt-me-updated">Updated:</strong> Loading...</p>
+            <p><strong id="adopt-me-server-size">Server Size:</strong> Loading...</p>
+            <p><strong id="adopt-me-genre">Genre:</strong> Loading...</p>
+            <p><strong id="adopt-me-allowed-gear">Allowed Gear:</strong> Loading...</p>
+            <a href="https://discord.gg/KYggEuWAxz" class="discord-button">
+                <img src="https://cdn.iconscout.com/icon/free/png-256/discord-2474806-2056094.png" alt="Discord Icon">
+                Join Discord
+            </a>
         </div>
-    </div>
 
-    <div id="blox-fruits" class="tab-content">
-        <div class="game-frame">
-            <img src="https://raw.githubusercontent.com/alqv1rqqq/alqv1rqqq.github.io/main/bloxfruits.png" alt="Blox Fruits Icon" class="game-icon">
-            <div class="game-info">
-                <div class="game-title">Blox Fruits</div>
-                <div class="game-owner">by Go Play Eclipsis</div>
-                <div class="game-description">
-                    Blox Fruits is a game where you can become a powerful fighter or fruit user as you train to become the strongest player in the world.
+        <div id="blox-fruits" class="tab-content">
+            <div class="game-header">
+                <img src="https://github.com/alqv1rqqq/alqv1rqqq.github.io/raw/main/bloxfruits.png" alt="Blox Fruits Icon">
+                <div class="game-info">
+                    <h2 id="blox-fruits-title">Blox Fruits</h2>
+                    <p>By Gamer Robot Inc</p>
+                    <a id="blox-fruits-play" href="https://www.roblox.kg/games/2753915549/Blox-Fruits?privateServerLinkCode=86526315434340671192844124685271" class="play-button">Play Now</a>
                 </div>
-                <a href="https://www.roblox.kg/games/2753915549/Blox-Fruits?privateServerLinkCode=86526315434340671192844124685271" class="play-button">Play Now</a>
-                <a href="https://discord.gg/KYggEuWAxz" class="discord-button">Join Discord</a>
             </div>
+            <p id="blox-fruits-description">Blox Fruits is a game where you can become a powerful fighter or fruit user as you train to become the strongest player in the world.</p>
+            <p><strong id="blox-fruits-visits">Visits:</strong> Loading...</p>
+            <p><strong id="blox-fruits-favorites">Favorites:</strong> Loading...</p>
+            <p><strong id="blox-fruits-likes">Likes:</strong> Loading...</p>
+            <p><strong id="blox-fruits-playing">Playing:</strong> Loading...</p>
+            <p><strong id="blox-fruits-created">Created:</strong> Loading...</p>
+            <p><strong id="blox-fruits-updated">Updated:</strong> Loading...</p>
+            <p><strong id="blox-fruits-server-size">Server Size:</strong> Loading...</p>
+            <p><strong id="blox-fruits-genre">Genre:</strong> Loading...</p>
+            <p><strong id="blox-fruits-allowed-gear">Allowed Gear:</strong> Loading...</p>
+            <a href="https://discord.gg/KYggEuWAxz" class="discord-button">
+                <img src="https://cdn.iconscout.com/icon/free/png-256/discord-2474806-2056094.png" alt="Discord Icon">
+                Join Discord
+            </a>
         </div>
-    </div>
 
-    <div id="da-hood" class="tab-content">
-        <div class="game-frame">
-            <img src="https://raw.githubusercontent.com/alqv1rqqq/alqv1rqqq.github.io/main/dahood.png" alt="Da Hood Icon" class="game-icon">
-            <div class="game-info">
-                <div class="game-title">Da Hood</div>
-                <div class="game-owner">by Da Hood Entertainment</div>
-                <div class="game-description">
-                    Da Hood is a game on Roblox where you can explore a city, engage in combat, and participate in various activities such as robbing stores and role-playing as different characters.
+        <div id="da-hood" class="tab-content">
+            <div class="game-header">
+                <img src="https://github.com/alqv1rqqq/alqv1rqqq.github.io/raw/main/dahood.png" alt="Da Hood Icon">
+                <div class="game-info">
+                    <h2 id="da-hood-title">Da Hood</h2>
+                    <p>By Da Hood Entertainment</p>
+                    <a id="da-hood-play" href="https://www.roblox.kg/games/2788229376/Da-Hood-UPDATE?privateServerLinkCode=02068085631340796062776777402388" class="play-button">Play Now</a>
                 </div>
-                <a href="https://www.roblox.kg/games/2788229376/Da-Hood-UPDATE?privateServerLinkCode=02068085631340796062776777402388" class="play-button">Play Now</a>
-                <a href="https://discord.gg/KYggEuWAxz" class="discord-button">Join Discord</a>
+            </div>
+            <p id="da-hood-description">Da Hood is a game on Roblox where you can explore a city, engage in combat, and participate in various activities such as robbing stores and role-playing as different characters.</p>
+            <p><strong id="da-hood-visits">Visits:</strong> Loading...</p>
+            <p><strong id="da-hood-favorites">Favorites:</strong> Loading...</p>
+            <p><strong id="da-hood-likes">Likes:</strong> Loading...</p>
+            <p><strong id="da-hood-playing">Playing:</strong> Loading...</p>
+            <p><strong id="da-hood-created">Created:</strong> Loading...</p>
+            <p><strong id="da-hood-updated">Updated:</strong> Loading...</p>
+            <p><strong id="da-hood-server-size">Server Size:</strong> Loading...</p>
+            <p><strong id="da-hood-genre">Genre:</strong> Loading...</p>
+            <p><strong id="da-hood-allowed-gear">Allowed Gear:</strong> Loading...</p>
+            <a href="https://discord.gg/KYggEuWAxz" class="discord-button">
+                <img src="https://cdn.iconscout.com/icon/free/png-256/discord-2474806-2056094.png" alt="Discord Icon">
+                Join Discord
+            </a>
+        </div>
+
+        <div id="profile" class="tab-content">
+            <div class="profile">
+                <img src="https://tr.rbxcdn.com/4a72ffb7bfc72c2b95be4f58e2c9e4f1/150/150/AvatarHeadshot/Png" alt="Profile Image">
+                <div class="profile-info">
+                    <h2 id="profile-name">Jay</h2>
+                    <p id="profile-username">@KIISUKE4</p>
+                    <div class="profile-buttons">
+                        <a href="https://www.roblox.com/games/2753915549/Blox-Fruits" class="play-button">Join</a>
+                        <a href="https://roblox.kg/users/1753596616/profile" class="profile-button">Add Friend</a>
+                    </div>
+                </div>
+            </div>
+            <div class="about-section">
+                <h3>About</h3>
+                <p id="profile-about">Hi</p>
+            </div>
+            <div class="currently-wearing-section">
+                <h3>Currently Wearing</h3>
+                <img src="https://tr.rbxcdn.com/c17b1f1f9e58a1dc39f84855ddc8ab7b/420/420/AvatarHeadshot/Png" alt="Currently Wearing" style="width: 100px; height: 100px;">
+            </div>
+            <div class="friends-section">
+                <h3>Friends</h3>
+                <img src="https://tr.rbxcdn.com/55650b4b2ba5ad29d8b2c0309a09b1c3/150/150/AvatarHeadshot/Png" alt="Friend 1">
+                <img src="https://tr.rbxcdn.com/25d0d85d2b8e41f65af8d60d85d22c3e/150/150/AvatarHeadshot/Png" alt="Friend 2">
+                <img src="https://tr.rbxcdn.com/40a7452a5ab5d6c52b99e4e410b0079d/150/150/AvatarHeadshot/Png" alt="Friend 3">
+                <!-- Add more friends as needed -->
             </div>
         </div>
     </div>
 
     <script>
         function showTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-
+            var tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(function(tab) {
+                tab.classList.remove('active');
+            });
             document.getElementById(tabId).classList.add('active');
         }
 
-        function startCountdown(duration, display) {
-            let timer = duration, hours, minutes, seconds;
-            setInterval(function () {
-                hours = parseInt(timer / 3600, 10);
-                minutes = parseInt((timer % 3600) / 60, 10);
-                seconds = parseInt(timer % 60, 10);
+        function updateGameInfo() {
+            // Replace with actual data fetching
+            document.getElementById('adopt-me-title').textContent = 'Adopt Me!';
+            document.getElementById('adopt-me-description').textContent = 'Adopt Me is a massively multiplayer online game on the gaming platform Roblox. The game features a variety of virtual pets, a customizable home, and various activities to enjoy with friends.';
+            document.getElementById('adopt-me-visits').textContent = 'Visits: 30.2B';
+            document.getElementById('adopt-me-favorites').textContent = 'Favorites: 24.9M';
+            document.getElementById('adopt-me-likes').textContent = 'Likes: 2.1M';
+            document.getElementById('adopt-me-playing').textContent = 'Playing: 200K';
+            document.getElementById('adopt-me-created').textContent = 'Created: 2017';
+            document.getElementById('adopt-me-updated').textContent = 'Updated: 2024';
+            document.getElementById('adopt-me-server-size').textContent = 'Server Size: 48';
+            document.getElementById('adopt-me-genre').textContent = 'Genre: Adventure';
+            document.getElementById('adopt-me-allowed-gear').textContent = 'Allowed Gear: All';
 
-                hours = hours < 10 ? "0" + hours : hours;
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
+            document.getElementById('blox-fruits-title').textContent = 'Blox Fruits';
+            document.getElementById('blox-fruits-description').textContent = 'Blox Fruits is a game where you can become a powerful fighter or fruit user as you train to become the strongest player in the world.';
+            document.getElementById('blox-fruits-visits').textContent = 'Visits: 10.5B';
+            document.getElementById('blox-fruits-favorites').textContent = 'Favorites: 8.9M';
+            document.getElementById('blox-fruits-likes').textContent = 'Likes: 1.7M';
+            document.getElementById('blox-fruits-playing').textContent = 'Playing: 100K';
+            document.getElementById('blox-fruits-created').textContent = 'Created: 2019';
+            document.getElementById('blox-fruits-updated').textContent = 'Updated: 2024';
+            document.getElementById('blox-fruits-server-size').textContent = 'Server Size: 12';
+            document.getElementById('blox-fruits-genre').textContent = 'Genre: RPG';
+            document.getElementById('blox-fruits-allowed-gear').textContent = 'Allowed Gear: Melee';
 
-                display.textContent = hours + ":" + minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    timer = duration;
-                }
-            }, 1000);
+            document.getElementById('da-hood-title').textContent = 'Da Hood';
+            document.getElementById('da-hood-description').textContent = 'Da Hood is a game on Roblox where you can explore a city, engage in combat, and participate in various activities such as robbing stores and role-playing as different characters.';
+            document.getElementById('da-hood-visits').textContent = 'Visits: 2.3B';
+            document.getElementById('da-hood-favorites').textContent = 'Favorites: 3.1M';
+            document.getElementById('da-hood-likes').textContent = 'Likes: 500K';
+            document.getElementById('da-hood-playing').textContent = 'Playing: 50K';
+            document.getElementById('da-hood-created').textContent = 'Created: 2018';
+            document.getElementById('da-hood-updated').textContent = 'Updated: 2024';
+            document.getElementById('da-hood-server-size').textContent = 'Server Size: 20';
+            document.getElementById('da-hood-genre').textContent = 'Genre: Fighting';
+            document.getElementById('da-hood-allowed-gear').textContent = 'Allowed Gear: Guns';
         }
 
-        window.onload = function () {
-            const thirtyHours = 30 * 60 * 60;
-            const display = document.querySelector('#countdown-timer');
-            startCountdown(thirtyHours, display);
-        };
-    </script>
+        // Simulate dynamic updates
+        setInterval(function() {
+            updateGameInfo();
+        }, 500); // Update every 5 seconds
 
+        // Initial load
+        showTab('giveaway');
+    </script>
 </body>
 </html>
